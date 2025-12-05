@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/next"
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -70,6 +71,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${poppins.variable} antialiased`}>
           {children}
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
