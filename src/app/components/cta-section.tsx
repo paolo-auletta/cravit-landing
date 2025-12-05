@@ -1,12 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
+import { WaitlistModal } from "./waitlist-modal";
 
 export function CtaSection() {
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+
   return (
     <section className="relative mx-auto w-full bg-[var(--color-white)] px-5 pb-24 sm:px-10 lg:px-24">
       <div className="mx-auto max-w-6xl">
@@ -35,7 +39,11 @@ export function CtaSection() {
               </p>
 
               <div className="mt-2 flex flex-wrap items-center gap-4">
-                <Button variant="heroLarge" className="group">
+                <Button
+                  variant="heroLarge"
+                  className="group"
+                  onClick={() => setIsWaitlistOpen(true)}
+                >
                   <ArrowUpRight className="size-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   Join the Waitlist
                 </Button>
@@ -105,6 +113,11 @@ export function CtaSection() {
           </div>
         </motion.div>
       </div>
+
+      <WaitlistModal
+        open={isWaitlistOpen}
+        onClose={() => setIsWaitlistOpen(false)}
+      />
     </section>
   );
 }

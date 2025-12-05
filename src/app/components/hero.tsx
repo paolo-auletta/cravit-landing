@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
+import { WaitlistModal } from "./waitlist-modal";
 
 type CardLayer = {
   src: string;
@@ -89,6 +90,7 @@ const cardLayers: CardLayer[] = [
 
 export function Hero() {
   const heroRef = useRef<HTMLElement | null>(null);
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -196,12 +198,20 @@ export function Hero() {
         </div>
 
         <div className="flex flex-col items-center gap-6 text-center">
-          <Button variant="heroLarge" className="group">
+          <Button
+            variant="heroLarge"
+            className="group"
+            onClick={() => setIsWaitlistOpen(true)}
+          >
             <ArrowUpRight className="size-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             Join the Waitlist
           </Button>
         </div>
       </div>
+      <WaitlistModal
+        open={isWaitlistOpen}
+        onClose={() => setIsWaitlistOpen(false)}
+      />
     </section>
   );
 }
