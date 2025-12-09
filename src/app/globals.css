@@ -49,6 +49,8 @@
   --color-dark-2: #171717;
   --color-dark-3: #292929;
   --color-white: #ffffff;
+  --color-sand: #f5efe7;
+  --color-sand-2: #d9d6d0;
   --color-background: #fffaf5;
   --color-accent: #ff6900;
   --color-accent-2: #f64900;
@@ -199,5 +201,14 @@
     line-height: 1.2;
     letter-spacing: -0.03em;
     color: var(--color-dark-1);
+  }
+
+  .nav-link {
+    font-size: 15px;
+    line-height: 1.2em;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+    font-family: var(--font-display);
+    color: color-mix(in srgb, var(--color-dark-1) 75%, transparent);
   }
 }

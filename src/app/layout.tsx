@@ -82,6 +82,7 @@ export default function RootLayout({
               right: "16px",
               zIndex: 50,
             }}
+            className="hidden md:block"
           >
             <img
               src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1046493&theme=light&t=1765013989304"
