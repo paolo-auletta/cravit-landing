@@ -7,13 +7,40 @@ import { Footer } from "../components/footer"
 import { BlogHero, PostCard, PostList } from "../components/blog"
 
 export const metadata: Metadata = {
-  title: "Blog | Cravit",
+  title: "Blog",
   description:
-    "Tips, tutorials, and the latest news from the Cravit team to help you cook smarter and waste less.",
+    "Tips, tutorials, and the latest news from the Cravit team. Discover restaurant recommendations, food journaling tips, and updates about our app.",
+  keywords: [
+    "Cravit blog",
+    "food blog",
+    "restaurant tips",
+    "food journaling tips",
+    "restaurant recommendations",
+    "foodie blog",
+  ],
   openGraph: {
     title: "Blog | Cravit",
     description:
-      "Tips, tutorials, and the latest news from the Cravit team to help you cook smarter and waste less.",
+      "Tips, tutorials, and the latest news from the Cravit team. Discover restaurant recommendations and food journaling tips.",
+    type: "website",
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: "Cravit Blog",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | Cravit",
+    description:
+      "Tips, tutorials, and the latest news from the Cravit team.",
+    images: ["/icon.png"],
+  },
+  alternates: {
+    canonical: "/blog",
   },
 }
 

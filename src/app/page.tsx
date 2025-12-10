@@ -1,16 +1,22 @@
-import { getLatestPosts } from "@/lib/posts"
-
 import { Navbar } from "./components/navbar"
 import { CtaSection } from "./components/cta-section"
 import { FeaturesSection } from "./components/features"
 import { Footer } from "./components/footer"
 import { Hero } from "./components/hero"
 import { HowItWorksSection } from "./components/how-it-works"
-import { LatestPosts } from "./components/latest-posts"
+import {
+  WebsiteJsonLd,
+  OrganizationJsonLd,
+  SoftwareAppJsonLd,
+} from "@/components/seo/json-ld"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[var(--color-background)] pt-28 sm:pt-32">
+    <>
+      <WebsiteJsonLd />
+      <OrganizationJsonLd />
+      <SoftwareAppJsonLd />
+      <main className="min-h-screen bg-[var(--color-background)] pt-28 sm:pt-32">
       <section className="px-5 pt-6 sm:px-10 lg:px-24">
         <div className="mx-auto max-w-6xl">
           <Navbar />
@@ -28,5 +34,6 @@ export default function Home() {
       <CtaSection />
       <Footer />
     </main>
+    </>
   )
 }

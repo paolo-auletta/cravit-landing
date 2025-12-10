@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s | Cravit",
   },
   description:
-    "Discover, rate, and explore restaurants effortlessly with Cravit's curated food journaling app.",
+    "Discover, rate, and explore restaurants effortlessly with Cravit's curated food journaling app. Track your favorite spots, share reviews with friends, and never forget a great meal.",
   keywords: [
     "Cravit",
     "Cravy",
@@ -30,27 +30,52 @@ export const metadata: Metadata = {
     "food journaling",
     "restaurant ratings",
     "food recommendations",
+    "restaurant tracker",
+    "food diary",
+    "restaurant reviews",
+    "best restaurants near me",
+    "food discovery app",
+    "meal tracking",
+    "foodie app",
   ],
+  authors: [{ name: "Cravit Team" }],
+  creator: "Cravit",
+  publisher: "Cravit",
+  applicationName: "Cravit",
+  category: "Food & Drink",
   openGraph: {
     type: "website",
     title: "Cravit | Find your Next Craving",
     description:
-      "Discover, rate, and explore restaurants effortlessly with Cravit's curated food journaling app.",
+      "Discover, rate, and explore restaurants effortlessly with Cravit's curated food journaling app. Track your favorite spots and share reviews with friends.",
     url: "/",
     siteName: "Cravit",
+    locale: "en_US",
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: "Cravit - Food Discovery App",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Cravit | Find your Next Craving",
     description:
       "Discover, rate, and explore restaurants effortlessly with Cravit's curated food journaling app.",
+    images: ["/icon.png"],
+    creator: "@cravitapp",
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-snippet": -1,
       "max-image-preview": "large",
       "max-video-preview": -1,
@@ -58,6 +83,23 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+  },
+  verification: {
+    // Add your verification codes here when available
+    // google: "your-google-verification-code",
+    // yandex: "your-yandex-verification-code",
+    // bing: "your-bing-verification-code",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Cravit",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
   },
 };
 
