@@ -14,8 +14,9 @@
 ## Typography System (Poppins)
 | Style | Weight | Size | Line Height | Letter Spacing | Color |
 | --- | --- | --- | --- | --- | --- |
-| Heading 1 | 500 (Medium) | 88px | 0.97em | -0.04em | Dark 1 |
-| Heading 2 | 400 (Regular) | 44px | 1.1em | -0.04em | Dark 1 |
+| Heading Hero | 500 (Medium) | clamp(56px, 8vw, 88px) | 0.97em | -0.04em | Dark 1 |
+| Heading 1 | 500 (Medium) | clamp(36px, 5vw, 52px) | 1.1em | -0.03em | Dark 1 |
+| Heading 2 | 400 (Regular) | clamp(32px, 4vw, 44px) | 1.1em | -0.04em | Dark 1 |
 | Heading 3 | 500 (Medium) | 32px | 1.4em | -0.04em | Dark 1 |
 | Heading 4 | 500 (Medium) | 24px | 1.4em | -0.04em | Dark 1 |
 | Body XL | 500 (Medium) | 20px | 1.45em | -0.02em | Dark 1 @ 75% |

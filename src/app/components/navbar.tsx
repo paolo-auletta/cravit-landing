@@ -9,14 +9,14 @@ import { cn } from "@/lib/utils"
 
 const NAV_LINKS = [
   { label: "Home", href: "/", showOnDesktop: false },
-  { label: "Blog", href: "#blog" },
+  { label: "Blog", href: "/blog" },
   { label: "Feedback", href: "https://cravit.featurebase.app/" },
 ]
 
 const PRODUCT_HUNT_URL =
   "https://www.producthunt.com/products/cravit?utm_source=badge-featured&utm_medium=badge"
 
-export function BlogNavbar() {
+export function Navbar() {
   const [activeLink, setActiveLink] = useState("Blog")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isNavHidden, setIsNavHidden] = useState(false)
@@ -75,14 +75,16 @@ export function BlogNavbar() {
       <div className="mx-auto w-full max-w-6xl space-y-3">
         <div className="hidden items-center justify-between rounded-[72px] bg-[var(--color-sand)]/95 px-[18px] py-2.5 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] backdrop-blur-[12px] sm:flex">
           <div className="flex items-center gap-3">
-            <Image
-              src="/icon.png"
-              alt="Cravit icon"
-              width={28}
-              height={28}
-              className="rounded-[10px]"
-              priority
-            />
+            <Link href="/">
+              <Image
+                src="/icon.png"
+                alt="Cravit icon"
+                width={28}
+                height={28}
+                className="rounded-[10px]"
+                priority
+                />
+              </Link>
           </div>
 
           <div className="flex items-center">
@@ -121,15 +123,17 @@ export function BlogNavbar() {
         <div className="sm:hidden">
           <div className="rounded-[22px] bg-[var(--color-sand)]/95 px-5 py-2.5 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] backdrop-blur-[10px] transition-all">
             <div className="flex items-center justify-between">
-              <Image
-                src="/icon.png"
-                alt="Cravit icon"
-                width={34}
-                height={34}
-                className="rounded-[10px]"
-                priority
-              />
-
+              <Link href="/">
+                <Image
+                  src="/icon.png"
+                  alt="Cravit icon"
+                  width={34}
+                  height={34}
+                  className="rounded-[10px]"
+                  priority
+                />
+              </Link>
+              
               <button
                 type="button"
                 aria-label="Toggle menu"

@@ -133,7 +133,7 @@ export function Hero() {
         <div className="flex flex-col gap-[36px] justify-center items-center text-center">
           <motion.div
             style={{ scale: titleScale, y: titleTranslate, opacity: titleOpacity }}
-            className="relative z-0 text-center heading-1 max-w-xl"
+            className="relative z-0 text-center heading-hero max-w-xl"
           >
             <span>
               Find your Next{" "}

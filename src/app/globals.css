@@ -141,10 +141,18 @@
 }
 
 @layer utilities {
-  .heading-1 {
+  .heading-hero {
     font-size: clamp(3.5rem, 8vw, 5.5rem);
     line-height: 0.97;
     letter-spacing: -0.04em;
+    font-weight: 500;
+    color: var(--color-dark-1);
+  }
+
+  .heading-1 {
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
     font-weight: 500;
     color: var(--color-dark-1);
   }

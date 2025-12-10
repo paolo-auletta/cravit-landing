@@ -72,26 +72,6 @@ export default function RootLayout({
         <body className={`${poppins.variable} antialiased`}>
           {children}
           <Analytics />
-          <a
-            href="https://www.producthunt.com/products/cravit?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-cravit"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              position: "fixed",
-              bottom: "16px",
-              right: "16px",
-              zIndex: 50,
-            }}
-            className="hidden md:block"
-          >
-            <img
-              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1046493&theme=light&t=1765013989304"
-              alt="Cravit - Discover new places through food missions with friends | Product Hunt"
-              style={{ width: "250px", height: "54px" }}
-              width="250"
-              height="54"
-            />
-          </a>
         </body>
       </html>
     </ClerkProvider>
