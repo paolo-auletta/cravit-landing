@@ -53,7 +53,7 @@ export function Navbar() {
     }
   }, [isMenuOpen])
 
-  const desktopLinks = NAV_LINKS.filter((link) => link.showOnDesktop !== false)
+  const desktopLinks = NAV_LINKS
   const mobileLinks = NAV_LINKS
 
   const handleNavSelect = (label: string) => {

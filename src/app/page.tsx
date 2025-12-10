@@ -25,7 +25,6 @@ export default function Home() {
           <HowItWorksSection />
         </div>
       </div>
-      <LatestPosts posts={getLatestPosts(3)} />
       <CtaSection />
       <Footer />
     </main>
