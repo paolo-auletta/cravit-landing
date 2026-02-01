@@ -144,7 +144,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
         {/* Title and tags section */}
         <section className="px-5 pb-6 sm:px-10 lg:px-24">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-4xl">
             <div className="mb-4 flex flex-wrap gap-2">
               {post.tags.map((tag) => (
                 <span
@@ -161,7 +161,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
         {/* Article content */}
         <article className="px-5 pb-20 sm:px-10 lg:px-24">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-4xl">
             {/* Author and meta info */}
             <div className="mb-10 flex flex-wrap items-center gap-4 text-sm text-[var(--color-dark-1)]/50">
               <div className="flex items-center gap-2">

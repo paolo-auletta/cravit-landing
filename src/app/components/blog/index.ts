@@ -1,6 +1,7 @@
 export { AuthorCard } from "./author-card"
 export { BlogHero } from "./blog-hero"
 export { BlogWaitlist } from "./blog-waitlist"
+export { Conclusion } from "./conclusion"
 export { MDXContent } from "./mdx-content"
 export { PostCard } from "./post-card"
 export { PostList } from "./post-list"

@@ -1,6 +1,12 @@
 import { MDXRemote } from "next-mdx-remote/rsc"
+import type React from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { PizzaReview } from "./pizza-review"
+import { PizzeriaTable } from "./pizzeria-table"
+import { PizzeriaInfoCard } from "./pizzeria-info-card"
+import { ImageGallery } from "./image-gallery"
+import remarkGfm from "remark-gfm"
 
 // Position mapping for object-position
 const positionClasses = {
@@ -58,13 +64,123 @@ function Callout({ children, emoji = "💡" }: { children: React.ReactNode; emoj
   )
 }
 
+// Beautiful Table Component
+function Table({ children, className, ...props }: React.TableHTMLAttributes<HTMLTableElement>) {
+  return (
+    <div className="my-8 overflow-hidden rounded-2xl bg-white shadow-[0_4px_24px_rgba(0,0,0,0.06)] ring-1 ring-[var(--color-dark-1)]/5">
+      <div className="overflow-x-auto">
+        <table
+          {...props}
+          className={`w-full border-collapse text-left text-sm ${className ?? ""}`}
+        >
+          {children}
+        </table>
+      </div>
+    </div>
+  )
+}
+
+function TableHead({ children, className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
+  return (
+    <thead
+      {...props}
+      className={`bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-2)] text-left text-xs font-semibold uppercase tracking-wide text-white ${
+        className ?? ""
+      }`}
+    >
+      {children}
+    </thead>
+  )
+}
+
+function TableBody({ children, className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
+  return (
+    <tbody
+      {...props}
+      className={`divide-y divide-[var(--color-sand)]/80 bg-[var(--color-background)] ${className ?? ""}`}
+    >
+      {children}
+    </tbody>
+  )
+}
+
+function TableRow({ children, className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) {
+  return (
+    <tr
+      {...props}
+      className={`transition-colors hover:bg-[var(--color-sand)]/50 ${className ?? ""}`}
+    >
+      {children}
+    </tr>
+  )
+}
+
+function TableHeader({ children, className, ...props }: React.ThHTMLAttributes<HTMLTableCellElement>) {
+  return (
+    <th
+      {...props}
+      className={`px-4 py-3 text-[0.75rem] font-semibold tracking-wide first:pl-6 last:pr-6 ${
+        className ?? ""
+      }`}
+    >
+      {children}
+    </th>
+  )
+}
+
+function TableCell({ children, className, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) {
+  return (
+    <td
+      {...props}
+      className={`px-4 py-3.5 text-sm text-[var(--color-dark-1)]/80 first:pl-6 first:font-medium first:text-[var(--color-dark-1)] last:pr-6 ${
+        className ?? ""
+      }`}
+    >
+      {children}
+    </td>
+  )
+}
+
+// Extract grade from title like "Name — District (Voto 8.5)" or "(Voto 8–8.5)"
+function extractGradeFromTitle(children: React.ReactNode): { title: string; grade: string | null } {
+  const text = typeof children === "string" ? children : 
+    Array.isArray(children) ? children.map(c => typeof c === "string" ? c : "").join("") :
+    String(children || "")
+  
+  // Match patterns like "(Voto 8.5)" or "(Voto 8–8.5)" or "(Voto 9+)"
+  const gradeMatch = text.match(/\(Voto\s+([0-9.+–-]+)\)\s*$/)
+  
+  if (gradeMatch) {
+    const title = text.replace(/\s*\(Voto\s+[0-9.+–-]+\)\s*$/, "").trim()
+    return { title, grade: gradeMatch[1] }
+  }
+  
+  return { title: text, grade: null }
+}
+
+// H2 with optional grade pill
+function H2WithGrade({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
+  const { title, grade } = extractGradeFromTitle(children)
+  
+  if (grade) {
+    return (
+      <h2 className="heading-3 mb-4 mt-8 flex items-center justify-between gap-4" {...props}>
+        <span>{title}</span>
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#ff6900] text-base font-bold text-white shadow-[0_4px_12px_rgba(255,105,0,0.4)]">
+          {grade}
+        </span>
+      </h2>
+    )
+  }
+  
+  return <h2 className="heading-3 mb-4 mt-8" {...props}>{children}</h2>
+}
+
 const components = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className="heading-2 mb-6 mt-10 first:mt-0" {...props} />
   ),
-  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="heading-3 mb-4 mt-8" {...props} />
-  ),
+  h2: H2WithGrade,
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3 className="heading-4 mb-3 mt-6" {...props} />
   ),
@@ -131,11 +247,22 @@ const components = {
   em: (props: React.HTMLAttributes<HTMLElement>) => (
     <em className="italic" {...props} />
   ),
+  // Table components
+  table: (props: React.TableHTMLAttributes<HTMLTableElement>) => <Table {...props} />,
+  thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => <TableHead {...props} />,
+  tbody: (props: React.HTMLAttributes<HTMLTableSectionElement>) => <TableBody {...props} />,
+  tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => <TableRow {...props} />,
+  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => <TableHeader {...props} />,
+  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => <TableCell {...props} />,
   // Custom components for rich layouts
   ImageFull,
   ImageRight,
   ImageLeft,
   Callout,
+  PizzaReview,
+  PizzeriaTable,
+  PizzeriaInfoCard,
+  ImageGallery,
 }
 
 interface MDXContentProps {
@@ -145,7 +272,15 @@ interface MDXContentProps {
 export function MDXContent({ source }: MDXContentProps) {
   return (
     <article className="prose-cravit">
-      <MDXRemote source={source} components={components} />
+      <MDXRemote
+        source={source}
+        components={components}
+        options={{
+          mdxOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        }}
+      />
     </article>
   )
 }

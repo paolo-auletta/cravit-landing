@@ -208,6 +208,7 @@
     font-size: 0.875rem;
     line-height: 1.2;
     letter-spacing: -0.03em;
+    font-weight: 400;
     color: var(--color-dark-1);
   }
 
