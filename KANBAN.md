@@ -4,143 +4,150 @@
 - Images ONLY for pizzerias with Franchino grade > 8.25/8.5
 - BEST pizzeria (9+) gets big cover image, others get side images (left/right)
 - All featured pizzerias need 4 images under Cravit graphics (PizzaReview component)
-- PizzeriaInfoCard needs redesign (current one is "terrible")
-- Table stays as is (they like it)
+- PizzeriaInfoCard: ✅ REDESIGNED (clear cache to see changes)
+- Table stays as is (you like it)
 
 ---
 
-## 🎯 TODO
+## 🎯 ACTIVE TASKS
 
-### PRIORITY 1: PizzeriaInfoCard Redesign
-**Status:** ✅ COMPLETE
-**Assignee:** PIT
+### TASK 1: Fetch Real Images from Google Maps API
+**Status:** ✅ COMPLETE (with 1 exception)
+**API Key:** AIzaSyDb-LLmkfV4Tb_Ftm5go5jIKR2yJ4abb_w
+**Source:** REAL images from Google Maps Places API (NO AI)
 
-The current card has:
-- Gradient header with voto
-- Address preview
-- Two buttons (Maps, YouTube)
-- Footer text
+**Results:**
 
-Problems:
-- Too busy
-- Visual hierarchy is unclear
-- Address gets truncated awkwardly
-- Buttons take too much space
+| # | Pizzeria | Grade | Layout | Images | Status |
+|---|----------|-------|--------|--------|--------|
+| 1 | Quattro Stagioni | 9+ | ImageFull (cover) | 5 | ✅ Downloaded |
+| 2 | Pizza Luigi | 9 | ImageLeft | 5 | ✅ Downloaded |
+| 3 | Sancho | 8.5 | ImageRight | 5 | ✅ Downloaded |
+| 4 | Da Alberto | 8.5 | ImageLeft | 5 | ✅ Downloaded |
+| 5 | Pizza Max | 8.5 | ImageRight | 0 | ⚠️ NO PHOTOS ON GOOGLE MAPS |
+| 6 | Tempio della Pizza | 8.5 | ImageLeft | 5 | ✅ Downloaded |
+| 7 | Box 41 | 8+ | ImageRight | 5 | ✅ Downloaded |
+| 8 | Claudio & Claudio | 8.5 | ImageLeft | 5 | ✅ Downloaded |
 
-**New Design Approach:**
-- Cleaner, more compact layout
-- Better visual hierarchy
-- Full address visible or elegantly truncated
-- More integrated action buttons
-- Maybe card-based layout with better spacing
+**Total:** 35 real images downloaded from Google Maps
 
----
+**Pizza Max Issue:**
+- Place exists on Google Maps: "Pizza Max - Forno a legna"
+- Address confirmed: Largo Cesidio da Fossa, 38
+- **Problem:** Business has 0 photos uploaded
+- **Solution needed:** Manual screenshots from Franchino's video OR generic placeholder
 
-### PRIORITY 2: Complete Pizzeria Sections (Roma Sud)
-**Status:** 🔴 Not Started
+**Image naming convention:**
+- Cover/Side: `location-1.png` (for 9+) or `location-1.jpg`
+- Gallery: `pizza-1.jpg`, `pizza-2.jpg`, `pizza-3.jpg`, `suppli-1.jpg`
 
-Current state:
-- ✅ Quattro Stagioni (9+) - Full layout with cover image, narrative, card, review, gallery
-- ✅ Pizza Luigi (9) - Full layout with side image, narrative, card, review, gallery  
-- ✅ Sancho (8.5) - Full layout with side image, narrative, card, review, gallery
-- ✅ Da Alberto (8.5) - Has side image, narrative, card, review, but only 3 images in gallery (needs 4)
-- ⚠️ Pizza Max (8.5) - Missing narrative text, NO side image, NO gallery (needs full layout)
-- ⚠️ Tempio della Pizza (8.5) - Missing narrative text, NO side image, NO gallery (needs full layout)
-- ⚠️ Box 41 (8+) - Has narrative, card, review - needs side image + gallery
-- ⚠️ Claudio & Claudio (8.5) - Has narrative, card, review - needs side image + gallery
-
-**Task 2.1: Da Alberto - Add 4th Image** ✅
-- Added 4th image (location-2.jpg) to gallery
-
-**Task 2.2: Pizza Max - Complete Section** ✅
-- Added ImageRight component with side image
-- Added 4-image gallery under review
-
-**Task 2.3: Tempio della Pizza - Complete Section** ✅
-- Added ImageLeft component with side image
-- Added 4-image gallery under review
-
-**Task 2.4: Box 41 - Add Side Image + Gallery** ✅
-- Added ImageRight component with side image
-- Added 4-image gallery under review
-
-**Task 2.5: Claudio & Claudio - Add Side Image + Gallery** ✅
-- Added ImageLeft component with side image
-- Added 4-image gallery under review
+**Output folder:** `/public/blog/pizza-roma-sud/{pizzeria-slug}/`
 
 ---
 
-### PRIORITY 3: Image Layout Pattern
-**Status:** ✅ IMPLEMENTED
+### TASK 2: Handle Pizza Max Missing Images
+**Status:** 🔴 NEEDS DECISION
 
-Pattern to follow:
-- **9+ (Quattro Stagioni):** `<ImageFull>` - Big cover image
-- **9 (Pizza Luigi):** `<ImageLeft>` - Side image left
-- **8.5 (Sancho):** `<ImageRight>` - Side image right  
-- **8.5 (Da Alberto):** `<ImageLeft>` - Side image left
-- **8.5 (Pizza Max):** `<ImageRight>` - Side image right
-- **8.5 (Tempio):** `<ImageLeft>` - Side image left
-- **8+ (Box 41):** `<ImageRight>` - Side image right
-- **8.5 (Claudio):** `<ImageLeft>` - Side image left
-
-Alternating pattern: Left, Right, Left, Right, Left, Right, Left, Right
+Options:
+1. **Screenshot from YouTube:** Extract frames from Franchino's video
+2. **Placeholder:** Use generic pizza/suppli images
+3. **Text-only:** Remove ImageRight/ImageGallery for this pizzeria
 
 ---
 
-### PRIORITY 4: Check Other Zones
+### TASK 3: Clear Browser Cache & Verify
+**Status:** ⏳ PENDING USER ACTION
+
+**Action required:** Hard refresh browser (Cmd+Shift+R on Mac)
+
+**What you should see:**
+- Redesigned PizzeriaInfoCard (clean 2-row layout)
+- All images loading from Google Maps
+- Proper alternating left/right image layouts
+
+---
+
+### TASK 4: Extract All Franchino Grades
 **Status:** 🔴 NOT STARTED
 
-Need to check:
-- pizzerie-roma-nord.mdx - Has content, needs images + layout
-- pizzerie-roma-est.mdx - Has content, needs images + layout  
-- pizzerie-roma-ovest-centro.mdx - Status unknown
+**Goal:** Build complete table with all pizzerias from videos
 
-For each:
-- Which pizzerias have grades > 8.25?
-- Do they have complete layouts?
-- Are images present?
-
-**Note:** These files exist and have content with PizzeriaInfoCard and PizzaReview components, but lack the ImageLeft/ImageRight layouts and galleries.
+**Current status:**
+- Table has 22 pizzerias
+- Need to verify all grades match Franchino's actual grades
+- Need to watch videos to extract grades for lower-rated pizzerias
 
 ---
 
-### PRIORITY 5: Franchino Grade Data Collection
-**Status:** 🔴 Not Started
+### TASK 5: Apply Layouts to Other Zones
+**Status:** 🔴 NOT STARTED
 
-Need to go through Franchino videos and extract:
-- All pizzerias mentioned
-- Their grades
-- Key quotes/narratives
-
-This is for building the complete table and ensuring all sections are accurate.
+**Files to update:**
+- `pizzerie-roma-nord.mdx` - Add ImageLeft/ImageRight + galleries
+- `pizzerie-roma-est.mdx` - Add ImageLeft/ImageRight + galleries  
+- `pizzerie-roma-ovest-centro.mdx` - Check status
 
 ---
 
-## ✅ DONE
+## ✅ COMPLETED
 
-- Read and understood current codebase
-- Identified components: PizzeriaInfoCard, PizzaReview, PizzeriaTable, ImageGallery, ImageFull, ImageLeft, ImageRight
-- Mapped out current state of Roma Sud
-- Created this task list
+- [x] PizzeriaInfoCard redesign (cleaner layout, better hierarchy)
+- [x] MDX structure updated with ImageFull/ImageLeft/ImageRight
+- [x] Gallery components added to all 8 pizzerias
+- [x] Alternating layout pattern (Left/Right) implemented
+- [x] Downloaded 35 real images from Google Maps API
+- [x] KANBAN created for task tracking
 
 ---
 
-## 📝 Notes
+## 📝 Technical Notes
 
-### Image Gallery Format
-All galleries use 4 images:
-```tsx
-<ImageGallery layout="grid" images={[
-  { src: "/blog/pizza-roma-sud/SLUG/pizza-3.jpg", alt: "..." },
-  { src: "/blog/pizza-roma-sud/SLUG/pizza-2.jpg", alt: "..." },
-  { src: "/blog/pizza-roma-sud/SLUG/pizza-1.jpg", alt: "..." },
-  { src: "/blog/pizza-roma-sud/SLUG/suppli-1.jpg", alt: "..." },
-]} />
+### Google Maps API Usage
+```javascript
+// 1. Find Place
+https://maps.googleapis.com/maps/api/place/findplacefromtext/json
+
+// 2. Get Details  
+https://maps.googleapis.com/maps/api/place/details/json
+
+// 3. Download Photo
+https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=XXX
 ```
 
-### Side Image Components
-Need to check if ImageLeft and ImageRight components exist in mdx-content.tsx or if they're custom components.
+### File Structure
+```
+public/blog/pizza-roma-sud/
+├── quattro-stagioni/
+│   ├── location-1.png (cover)
+│   ├── pizza-1.jpg
+│   ├── pizza-2.jpg
+│   ├── pizza-3.jpg
+│   └── suppli-1.jpg
+├── luigi/
+│   ├── location-1.jpg (side)
+│   ├── pizza-1.jpg
+│   ├── pizza-2.jpg
+│   ├── pizza-3.jpg
+│   └── suppli-1.jpg
+├── sancho/
+│   └── [5 images]
+├── da-alberto/
+│   ├── location-1.jpg (side)
+│   ├── location-2.jpg (gallery extra)
+│   ├── pizza-1.jpg
+│   ├── pizza-2.jpg
+│   ├── pizza-3.jpg
+│   └── suppli-1.jpg
+├── pizza-max/
+│   └── README.md (no images available)
+├── tempio-pizza/
+│   └── [5 images]
+├── box-41/
+│   └── [5 images]
+└── claudio-claudio/
+    └── [5 images]
+```
 
-### File Paths
-- Content: `/src/content/blog/pizzerie-roma-sud.mdx`
-- Components: `/src/app/components/blog/`
+### Scripts Used
+- `fetch-images.js` - Main download script
+- `search-pizza-max.js` - Alternative search for Pizza Max
