@@ -14,137 +14,76 @@ export function PizzeriaInfoCard({ voto, indirizzo, mapsUrl, recensione }: Pizze
   // Generate Google Maps URL from address if not provided
   const googleMapsUrl = mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(indirizzo)}`
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 20
-      }
-    }
-  } as const
+  // Parse grade for color coding
+  const numericGrade = parseFloat(voto.replace("+", ".5").replace("–", "."))
+  const isTopTier = numericGrade >= 9
+  const isHighTier = numericGrade >= 8.5
 
   return (
     <motion.div 
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants as any}
-      className="not-prose my-8 overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-[var(--color-dark-1)]/5"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="not-prose my-6 overflow-hidden rounded-2xl bg-white shadow-[0_2px_16px_rgba(0,0,0,0.06)] ring-1 ring-[var(--color-dark-1)]/5"
     >
-      {/* Voto Header - Top section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent)]/90 p-5 text-white">
-        <div className="absolute -right-4 -top-4 h-32 w-32 rounded-full bg-white/10 blur-xl"></div>
-        <div className="absolute -left-10 -bottom-10 h-32 w-32 rounded-full bg-black/10 blur-xl"></div>
-        
-        <div className="relative z-10 flex items-center justify-between">
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-white/80">Valutazione Finale</h3>
-            <div className="mt-1.5 flex items-baseline gap-2">
-              <p className="text-4xl font-bold">{voto}</p>
-              <div className="flex items-center gap-1 text-white/90">
-                <Star className="h-4 w-4" fill="currentColor" />
-                <span className="text-sm font-medium">/ 10</span>
-              </div>
-            </div>
-          </div>
-          
-          <motion.div
-            whileHover={{ rotate: 10, scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex h-16 w-16 items-center justify-center rounded-full bg-white/15 shadow-lg backdrop-blur-md"
-          >
-            <Star className="h-8 w-8" fill="white" strokeWidth={0} />
-          </motion.div>
+      {/* Clean Header Row */}
+      <div className="flex items-center gap-4 border-b border-[var(--color-dark-1)]/5 px-5 py-4">
+        {/* Grade Circle */}
+        <div 
+          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white ${
+            isTopTier 
+              ? "bg-[#ff6900] shadow-[0_4px_12px_rgba(255,105,0,0.35)]" 
+              : isHighTier
+              ? "bg-[#ff6900]/90 shadow-[0_4px_10px_rgba(255,105,0,0.25)]"
+              : "bg-[var(--color-dark-1)]/70"
+          }`}
+        >
+          {voto}
         </div>
         
-        {/* Simple address preview */}
-        <p className="mt-3 text-sm text-white/80">
-          {indirizzo.length > 50 ? indirizzo.substring(0, 50) + '...' : indirizzo}
-        </p>
+        {/* Address */}
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-medium text-[var(--color-dark-1)]">
+            {indirizzo}
+          </p>
+          <p className="mt-0.5 text-xs text-[var(--color-dark-1)]/50">
+            Voto di Franchino
+          </p>
+        </div>
       </div>
       
-      {/* Info buttons row */}
-      <div className="grid grid-cols-2 gap-4 p-5">
+      {/* Action Buttons Row */}
+      <div className="flex divide-x divide-[var(--color-dark-1)]/5">
         {/* Maps Button */}
-        <motion.a
-          variants={itemVariants as any}
-          whileHover={{ y: -4 }}
+        <a
           href={googleMapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-4 rounded-xl bg-[var(--color-sand)]/50 p-4 transition-all hover:bg-[var(--color-sand)]/80"
+          className="group flex flex-1 items-center justify-center gap-2 px-4 py-3.5 text-sm font-medium text-[var(--color-dark-1)]/80 transition-colors hover:bg-[var(--color-sand)]/50 hover:text-[var(--color-accent)]"
         >
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
-            <MapPin className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-dark-1)]/60">Trova su</p>
-            <p className="flex items-center gap-1 text-sm font-bold text-[var(--color-dark-1)]">
-              Google Maps
-              <ExternalLink className="h-3 w-3 text-[var(--color-dark-1)]/50" />
-            </p>
-          </div>
-        </motion.a>
+          <MapPin className="h-4 w-4 transition-transform group-hover:scale-110" />
+          <span>Google Maps</span>
+          <ExternalLink className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
+        </a>
         
         {/* YouTube Button */}
         {recensione ? (
-          <motion.a
-            variants={itemVariants as any}
-            whileHover={{ y: -4 }}
+          <a
             href={recensione}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 rounded-xl bg-[var(--color-sand)]/50 p-4 transition-all hover:bg-[var(--color-sand)]/80"
+            className="group flex flex-1 items-center justify-center gap-2 px-4 py-3.5 text-sm font-medium text-[var(--color-dark-1)]/80 transition-colors hover:bg-[var(--color-sand)]/50 hover:text-[#ff0000]"
           >
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#ff0000]/10 text-[#ff0000]">
-              <Youtube className="h-6 w-6" />
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-dark-1)]/60">Guarda su</p>
-              <p className="flex items-center gap-1 text-sm font-bold text-[var(--color-dark-1)]">
-                YouTube
-                <ExternalLink className="h-3 w-3 text-[var(--color-dark-1)]/50" />
-              </p>
-            </div>
-          </motion.a>
+            <Youtube className="h-4 w-4 transition-transform group-hover:scale-110" />
+            <span>Recensione</span>
+            <ExternalLink className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
+          </a>
         ) : (
-          <motion.div
-            variants={itemVariants as any}
-            className="flex items-center gap-4 rounded-xl bg-[var(--color-sand)]/30 p-4"
-          >
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[var(--color-dark-1)]/5 text-[var(--color-dark-1)]/30">
-              <Youtube className="h-6 w-6" />
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-dark-1)]/40">Video</p>
-              <p className="text-sm font-bold text-[var(--color-dark-1)]/40">
-                Non disponibile
-              </p>
-            </div>
-          </motion.div>
+          <div className="flex flex-1 items-center justify-center gap-2 px-4 py-3.5 text-sm font-medium text-[var(--color-dark-1)]/30">
+            <Youtube className="h-4 w-4" />
+            <span>Video non disponibile</span>
+          </div>
         )}
-      </div>
-      
-      {/* Footer with subtle hint */}
-      <div className="border-t border-[var(--color-dark-1)]/5 px-5 py-3">
-        <p className="text-center text-xs text-[var(--color-dark-1)]/40">
-          Recensione da <span className="font-medium text-[var(--color-accent)]">Cravit</span>, la tua guida per la pizza a Roma
-        </p>
       </div>
     </motion.div>
   )
