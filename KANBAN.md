@@ -1,153 +1,115 @@
-# Cravit Blog - Kanban Task List
+# Cravit Blog Cleanup - Kanban
 
-## 📊 Requirements Summary
-- Images ONLY for pizzerias with Franchino grade > 8.25/8.5
-- BEST pizzeria (9+) gets big cover image, others get side images (left/right)
-- All featured pizzerias need 4 images under Cravit graphics (PizzaReview component)
-- PizzeriaInfoCard: ✅ REDESIGNED (clear cache to see changes)
-- Table stays as is (you like it)
+## Project Overview
+Complete cleanup of all 4 Cravit blog posts (Roma Nord, Est, Ovest-Centro, Sud) with standardized formatting, image downloads, and cover image generation.
 
 ---
 
-## 🎯 ACTIVE TASKS
+## Phase 1: Content Cleanup (All 4 Posts)
 
-### TASK 1: Fetch Real Images from Google Maps API
-**Status:** ✅ COMPLETE (with 1 exception)
-**API Key:** AIzaSyDb-LLmkfV4Tb_Ftm5go5jIKR2yJ4abb_w
-**Source:** REAL images from Google Maps Places API (NO AI)
+### Task 1.1: Roma Nord - Verify & Finalize
+- [ ] Verify only pizzerias ≥8.5 have detailed paragraphs
+- [ ] Verify pizzerias are ordered from highest to lowest rating
+- [ ] Remove any paragraphs for pizzerias under 8.5/8.25 (keep only in table)
+- [ ] Commit changes
 
-**Results:**
+### Task 1.2: Roma Est - Full Cleanup
+- [ ] Read current state of `pizzerie-roma-est.mdx`
+- [ ] List all pizzerias with ratings
+- [ ] Delete paragraphs for pizzerias under 8.5/8.25
+- [ ] Reorder from highest to lowest rating (lowest allowed: 8.5)
+- [ ] Verify ImageGallery components are present for remaining pizzerias
+- [ ] Commit changes
 
-| # | Pizzeria | Grade | Layout | Images | Status |
-|---|----------|-------|--------|--------|--------|
-| 1 | Quattro Stagioni | 9+ | ImageFull (cover) | 5 | ✅ Downloaded |
-| 2 | Pizza Luigi | 9 | ImageLeft | 5 | ✅ Downloaded |
-| 3 | Sancho | 8.5 | ImageRight | 5 | ✅ Downloaded |
-| 4 | Da Alberto | 8.5 | ImageLeft | 5 | ✅ Downloaded |
-| 5 | Pizza Max | 8.5 | ImageRight | 0 | ⚠️ NO PHOTOS ON GOOGLE MAPS |
-| 6 | Tempio della Pizza | 8.5 | ImageLeft | 5 | ✅ Downloaded |
-| 7 | Box 41 | 8+ | ImageRight | 5 | ✅ Downloaded |
-| 8 | Claudio & Claudio | 8.5 | ImageLeft | 5 | ✅ Downloaded |
+### Task 1.3: Roma Ovest-Centro - Full Cleanup
+- [ ] Read current state of `pizzerie-roma-ovest-centro.mdx`
+- [ ] **REMOVE** "Mappa del Gusto" section entirely
+- [ ] Delete paragraphs for pizzerias under 8.5/8.25 (keep only in table)
+- [ ] Reorder from highest to lowest rating
+- [ ] Pizzerias to keep with paragraphs: Gianni al Mattone (10), Pizzeria Franz (9)
+- [ ] Pizzerias to move to table only: La Magliana (8.5), Il Trullo (8.5)
+- [ ] Commit changes
 
-**Total:** 35 real images downloaded from Google Maps
-
-**Pizza Max Issue:**
-- Place exists on Google Maps: "Pizza Max - Forno a legna"
-- Address confirmed: Largo Cesidio da Fossa, 38
-- **Problem:** Business has 0 photos uploaded
-- **Solution needed:** Manual screenshots from Franchino's video OR generic placeholder
-
-**Image naming convention:**
-- Cover/Side: `location-1.png` (for 9+) or `location-1.jpg`
-- Gallery: `pizza-1.jpg`, `pizza-2.jpg`, `pizza-3.jpg`, `suppli-1.jpg`
-
-**Output folder:** `/public/blog/pizza-roma-sud/{pizzeria-slug}/`
+### Task 1.4: Roma Sud - Full Cleanup
+- [ ] Read current state of `pizzerie-roma-sud.mdx`
+- [ ] List all pizzerias with ratings
+- [ ] Delete paragraphs for pizzerias under 8.5/8.25
+- [ ] Reorder from highest to lowest rating
+- [ ] Commit changes
 
 ---
 
-### TASK 2: Handle Pizza Max Missing Images
-**Status:** 🔴 NEEDS DECISION
+## Phase 2: Image Downloads
 
-Options:
-1. **Screenshot from YouTube:** Extract frames from Franchino's video
-2. **Placeholder:** Use generic pizza/suppli images
-3. **Text-only:** Remove ImageRight/ImageGallery for this pizzeria
+### Task 2.1: Roma Ovest-Centro Images
+- [ ] Create folder `/public/blog/pizza-roma-ovest-centro/`
+- [ ] Download 5 images for **Gianni al Mattone** (10/10) - Primavalle
+- [ ] Download 5 images for **Pizzeria Franz** (9/10) - Monteverde
+- [ ] Download 5 images for **La Magliana** (8.5/10) - Magliana  
+- [ ] Download 5 images for **Il Trullo** (8.5/10) - Trullo
+- [ ] Add ImageGallery components to MDX for all 4 pizzerias
+- [ ] Verify all image paths are correct
+- [ ] Commit changes
 
----
-
-### TASK 3: Clear Browser Cache & Verify
-**Status:** ⏳ PENDING USER ACTION
-
-**Action required:** Hard refresh browser (Cmd+Shift+R on Mac)
-
-**What you should see:**
-- Redesigned PizzeriaInfoCard (clean 2-row layout)
-- All images loading from Google Maps
-- Proper alternating left/right image layouts
+### Task 2.2: Verify Existing Images (Roma Nord, Est, Sud)
+- [ ] Verify all pizzerias ≥8.5 have ImageGallery components
+- [ ] Verify all image files exist in `/public/blog/`
+- [ ] Fix any broken image paths
 
 ---
 
-### TASK 4: Extract All Franchino Grades
-**Status:** 🔴 NOT STARTED
+## Phase 3: Cover Image Generation
 
-**Goal:** Build complete table with all pizzerias from videos
+### Task 3.1: Generate Cover Images
+Generate 4 cover images with:
+- Zone name (Roma Nord / Roma Est / Roma Ovest & Centro / Roma Sud)
+- Title: "Le Migliori Pizze al Taglio di [Zone]"
+- Subtitle: "Parere di Franchino" or "Con Franchino Er Criminale"
+- Style: Appetizing pizza imagery, Roman vibe
 
-**Current status:**
-- Table has 22 pizzerias
-- Need to verify all grades match Franchino's actual grades
-- Need to watch videos to extract grades for lower-rated pizzerias
-
----
-
-### TASK 5: Apply Layouts to Other Zones
-**Status:** 🔴 NOT STARTED
-
-**Files to update:**
-- `pizzerie-roma-nord.mdx` - Add ImageLeft/ImageRight + galleries
-- `pizzerie-roma-est.mdx` - Add ImageLeft/ImageRight + galleries  
-- `pizzerie-roma-ovest-centro.mdx` - Check status
+- [ ] Generate `/blog/pizza-roma-nord-cover.png`
+- [ ] Generate `/blog/pizza-roma-est-cover.png`
+- [ ] Generate `/blog/pizza-roma-ovest-cover.png`
+- [ ] Generate `/blog/pizza-roma-sud-cover.png`
+- [ ] Update MDX frontmatter with correct coverImage paths
+- [ ] Commit changes
 
 ---
 
-## ✅ COMPLETED
+## Phase 4: Final Review & Validation
 
-- [x] PizzeriaInfoCard redesign (cleaner layout, better hierarchy)
-- [x] MDX structure updated with ImageFull/ImageLeft/ImageRight
-- [x] Gallery components added to all 8 pizzerias
-- [x] Alternating layout pattern (Left/Right) implemented
-- [x] Downloaded 35 real images from Google Maps API
-- [x] KANBAN created for task tracking
+### Task 4.1: Content Validation
+- [ ] All 4 posts: Verify rating order (highest to lowest)
+- [ ] All 4 posts: Verify lowest rating is 8.5/8.25
+- [ ] All 4 posts: Verify no paragraphs exist for ratings under 8.5
+- [ ] All 4 posts: Verify tables include ALL pizzerias (even low-rated ones)
+- [ ] Roma Ovest-Centro: Verify Mappa del Gusto is removed
+
+### Task 4.2: Image Validation
+- [ ] All 4 posts: Verify ImageGallery components for ≥8.5 pizzerias
+- [ ] All 4 posts: Verify all image files exist
+- [ ] All 4 posts: Verify cover images exist and are linked
+
+### Task 4.3: Build Test
+- [ ] Run `pnpm build` to verify no errors
+- [ ] Fix any MDX/component issues
+
+### Task 4.4: Final Commit & Push
+- [ ] Commit all remaining changes
+- [ ] Push to origin/main
 
 ---
 
-## 📝 Technical Notes
+## Notes
 
-### Google Maps API Usage
-```javascript
-// 1. Find Place
-https://maps.googleapis.com/maps/api/place/findplacefromtext/json
+### Rating Thresholds
+- Keep detailed paragraphs: ≥8.5 (or 8.25 if that was the threshold used)
+- Table only: <8.5
+- All pizzerias must appear in the final table
 
-// 2. Get Details  
-https://maps.googleapis.com/maps/api/place/details/json
+### Image Requirements
+- Each pizzeria: 5 images (location, pizza x3, supplì)
+- Folder naming: `/public/blog/pizza-roma-[zone]/[pizzeria-name]/`
 
-// 3. Download Photo
-https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=XXX
-```
-
-### File Structure
-```
-public/blog/pizza-roma-sud/
-├── quattro-stagioni/
-│   ├── location-1.png (cover)
-│   ├── pizza-1.jpg
-│   ├── pizza-2.jpg
-│   ├── pizza-3.jpg
-│   └── suppli-1.jpg
-├── luigi/
-│   ├── location-1.jpg (side)
-│   ├── pizza-1.jpg
-│   ├── pizza-2.jpg
-│   ├── pizza-3.jpg
-│   └── suppli-1.jpg
-├── sancho/
-│   └── [5 images]
-├── da-alberto/
-│   ├── location-1.jpg (side)
-│   ├── location-2.jpg (gallery extra)
-│   ├── pizza-1.jpg
-│   ├── pizza-2.jpg
-│   ├── pizza-3.jpg
-│   └── suppli-1.jpg
-├── pizza-max/
-│   └── README.md (no images available)
-├── tempio-pizza/
-│   └── [5 images]
-├── box-41/
-│   └── [5 images]
-└── claudio-claudio/
-    └── [5 images]
-```
-
-### Scripts Used
-- `fetch-images.js` - Main download script
-- `search-pizza-max.js` - Alternative search for Pizza Max
+### Project Path
+`/Users/paoloauletta/Documents/cravit-landing-opecode/`

@@ -1,195 +1,135 @@
 "use client"
 
-import { MapPin, Youtube, ExternalLink, Star, Navigation } from "lucide-react"
-import { motion } from "framer-motion"
+import { MapPin, Play } from "lucide-react"
 
 interface PizzeriaInfoCardProps {
+  nome: string
   voto: string
   indirizzo: string
   mapsUrl?: string
   recensione?: string
 }
 
-export function PizzeriaInfoCard({ voto, indirizzo, mapsUrl, recensione }: PizzeriaInfoCardProps) {
-  // Generate Google Maps URL from address if not provided
-  const googleMapsUrl = mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(indirizzo)}`
+function isUrl(str: string) {
+  return str.startsWith("http://") || str.startsWith("https://")
+}
 
-  // Parse grade for styling
-  const numericGrade = parseFloat(voto.replace("+", ".5").replace("–", "."))
-  const isTopTier = numericGrade >= 9
-  const isHighTier = numericGrade >= 8
+export function PizzeriaInfoCard({ nome, voto, indirizzo, mapsUrl, recensione }: PizzeriaInfoCardProps) {
+  const googleMapsUrl =
+    mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(indirizzo)}`
 
-  // Determine grade color intensity based on score
-  const getGradeIntensity = () => {
-    if (numericGrade >= 9.5) return "from-[#ff6900] via-[#ff8533] to-[#ff5a1f]"
-    if (numericGrade >= 9) return "from-[#ff6900] to-[#ff8533]"
-    if (numericGrade >= 8.5) return "from-[#ff8533] to-[#ff9f5a]"
-    return "from-[#ff9f5a] to-[#ffb380]"
-  }
+  const hasVideo = recensione && isUrl(recensione)
+  const hasTextReview = recensione && !isUrl(recensione)
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-      className="not-prose my-8"
-    >
-      {/* Main Card Container */}
-      <div className="relative overflow-hidden rounded-3xl bg-[var(--color-sand)] dark:bg-[var(--color-dark-1)] shadow-2xl shadow-black/5 dark:shadow-black/30 ring-1 ring-black/5 dark:ring-white/10">
-        
-        {/* Background Glow Effect */}
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#ff6900]/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-[#ff6900]/5 rounded-full blur-2xl" />
+    <div className="not-prose my-10">
+      <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-[#F2EFEB] dark:border-white/10 bg-[var(--color-background)] dark:bg-[var(--color-dark-2)] shadow-[0_0px_40px_rgba(18,17,17,0.02)] dark:shadow-black/20">
+        {/* Orange accent bar */}
+        <div className="absolute left-0 top-0 bottom-0 w-1.5 md:w-2 bg-[linear-gradient(180deg,#ff8e43_0%,#ff6900_55%,#f64900_100%)]" />
 
-        {/* Top Premium Indicator */}
-        {isTopTier && (
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="absolute top-4 left-4 z-10"
-          >
-            <div className="flex items-center gap-1.5 bg-gradient-to-r from-yellow-400/90 to-amber-500/90 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-lg shadow-amber-500/20">
-              <Star className="w-3 h-3 fill-white text-white" />
-              <span className="text-[10px] font-bold text-white uppercase tracking-wider">Top Rated</span>
+        {/* ── Mobile: Design A (stacked with text links) ── */}
+        <div className="flex items-start gap-4 py-4 pl-6 pr-5 md:hidden">
+          {/* Grade bubble — mobile */}
+          <div className="-mt-1 shrink-0 flex items-center justify-center w-14 h-14 rounded-full bg-[linear-gradient(180deg,#ff8e43_0%,#ff6900_55%,#f64900_100%)] shadow-[inset_0_2px_1px_rgba(255,255,255,0.5),inset_0_10px_18px_rgba(255,255,255,0.35),0_8px_16px_-4px_rgba(255,105,0,0.3)]">
+            <div className="flex flex-col items-center">
+              <span className="text-[24px] font-black leading-none tracking-tight text-white drop-shadow-sm">
+                {voto}
+              </span>
+              <span className="text-[7px] font-bold uppercase tracking-[0.2em] text-white/80 mt-1">
+                Voto
+              </span>
             </div>
-          </motion.div>
-        )}
+          </div>
 
-        <div className="relative p-6 sm:p-8">
-          {/* Main Content Grid */}
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            
-            {/* HERO RATING - Large, Central, Impossible to Miss */}
-            <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.5, type: "spring", stiffness: 200 }}
-              className="relative"
-            >
-              {/* Outer Glow Ring */}
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                  opacity: [0.5, 0.8, 0.5]
-                }}
-                transition={{ 
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${getGradeIntensity()} blur-xl`}
-              />
-              
-              {/* Rating Badge */}
-              <div 
-                className={`relative w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-br ${getGradeIntensity()} shadow-2xl flex flex-col items-center justify-center overflow-hidden`}
+          <div className="flex-1 min-w-0 pt-0.5">
+            <p className="text-base font-semibold leading-snug text-[var(--color-dark-1)] dark:text-white/90">
+              {nome}
+            </p>
+            <p className="mt-0.5 text-sm leading-snug text-[var(--color-dark-1)]/50 dark:text-white/40">
+              {indirizzo}
+            </p>
+            {hasTextReview && (
+              <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-dark-1)]/40 dark:text-white/30">
+                {recensione}
+              </p>
+            )}
+            <div className="flex items-center gap-4 mt-3">
+              <a
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-[13px] font-semibold text-[var(--color-accent)] transition-opacity hover:opacity-70"
               >
-                {/* Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent" />
-                
-                {/* Rating Number - HERO SIZE */}
-                <motion.span
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.4 }}
-                  className="relative text-5xl sm:text-6xl font-black text-white tracking-tighter drop-shadow-lg"
-                >
-                  {voto}
-                </motion.span>
-                
-                {/* Label */}
-                <motion.span
-                  initial={{ y: 10, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.4 }}
-                  className="relative text-[10px] sm:text-xs font-bold text-white/90 uppercase tracking-[0.2em] mt-0.5"
-                >
-                  Voto
-                </motion.span>
-
-                {/* Sparkle for high scores */}
-                {isHighTier && (
-                  <motion.div
-                    initial={{ scale: 0, rotate: -45 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ delay: 0.5, type: "spring" }}
-                    className="absolute -top-1 -right-1"
-                  >
-                    <Star className="w-6 h-6 fill-yellow-300 text-yellow-300 drop-shadow-md" />
-                  </motion.div>
-                )}
-              </div>
-            </motion.div>
-
-            {/* Content Section */}
-            <div className="flex-1 text-center sm:text-left space-y-4">
-              
-              {/* Address Block */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="space-y-2"
-              >
-                <div className="flex items-center justify-center sm:justify-start gap-2 text-[#ff6900]">
-                  <MapPin className="w-4 h-4" />
-                  <span className="text-xs font-bold uppercase tracking-widest">Indirizzo</span>
-                </div>
-                <p className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white leading-tight">
-                  {indirizzo}
-                </p>
-              </motion.div>
-
-              {/* Action Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex flex-col xs:flex-row gap-3 pt-2"
-              >
-                {/* Google Maps Button */}
-                <motion.a
-                  href={googleMapsUrl}
+                <MapPin className="w-3.5 h-3.5" />
+                Maps
+              </a>
+              {hasVideo && (
+                <a
+                  href={recensione}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group flex items-center justify-center gap-2.5 rounded-xl bg-gray-900 dark:bg-white/10 backdrop-blur-sm px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-gray-800 dark:hover:bg-white/15 hover:shadow-lg hover:shadow-black/20"
+                  className="flex items-center gap-1.5 text-[13px] font-semibold text-red-500 transition-opacity hover:opacity-70"
                 >
-                  <Navigation className="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
-                  <span>Google Maps</span>
-                  <ExternalLink className="w-3 h-3 opacity-50 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </motion.a>
-
-                {/* YouTube Button */}
-                {recensione ? (
-                  <motion.a
-                    href={recensione}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.02, y: -1 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25"
-                  >
-                    <Youtube className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                    <span>Video Recensione</span>
-                    <ExternalLink className="w-3 h-3 opacity-50 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </motion.a>
-                ) : (
-                  <div className="flex items-center justify-center gap-2.5 rounded-xl bg-gray-200 dark:bg-white/5 px-5 py-3 text-sm font-medium text-gray-400 dark:text-white/40 cursor-not-allowed">
-                    <Youtube className="w-4 h-4" />
-                    <span>Video non disponibile</span>
-                  </div>
-                )}
-              </motion.div>
+                  <Play className="w-3 h-3 fill-current" />
+                  Video
+                </a>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Bottom Gradient Line */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#ff6900]/50 to-transparent" />
+        {/* ── Desktop: Design C (bigger, actions right) ── */}
+        <div className="hidden md:flex items-center gap-5 py-5 pl-8 pr-6">
+          {/* Grade bubble — desktop (bigger) */}
+          <div className="shrink-0 flex items-center justify-center w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-[linear-gradient(180deg,#ff8e43_0%,#ff6900_55%,#f64900_100%)] shadow-[inset_0_2px_1px_rgba(255,255,255,0.5),inset_0_10px_18px_rgba(255,255,255,0.35),0_8px_16px_-4px_rgba(255,105,0,0.3)]">
+            <div className="flex flex-col items-center">
+              <span className="text-[34px] lg:text-[42px] font-black leading-none tracking-tight text-white drop-shadow-sm">
+                {voto}
+              </span>
+              <span className="text-[9px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-white/80 mt-1">
+                Voto
+              </span>
+            </div>
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <p className="text-lg font-semibold leading-snug text-[var(--color-dark-1)] dark:text-white/90">
+              {nome}
+            </p>
+            <p className="mt-0.5 text-[15px] leading-snug text-[var(--color-dark-1)]/50 dark:text-white/40">
+              {indirizzo}
+            </p>
+            {hasTextReview && (
+              <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-dark-1)]/40 dark:text-white/30">
+                {recensione}
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2.5 shrink-0">
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-[var(--color-dark-1)]/5 dark:bg-white/10 text-[var(--color-dark-1)]/50 dark:text-white/50 transition-colors hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
+              title="Apri in Maps"
+            >
+              <MapPin className="w-[18px] h-[18px]" />
+            </a>
+            {hasVideo && (
+              <a
+                href={recensione}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-red-500/5 dark:bg-red-500/10 text-red-400 transition-colors hover:bg-red-500/15 hover:text-red-500"
+                title="Video Recensione"
+              >
+                <Play className="w-4 h-4 fill-current" />
+              </a>
+            )}
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   )
 }

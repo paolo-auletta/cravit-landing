@@ -16,14 +16,14 @@ interface ConclusionProps {
   otherZones?: ZoneLink[]
 }
 
-export function Conclusion({ 
+export function Conclusion({
   title = "Crea la Tua Cravy",
   summary = "Questa guida è solo l'inizio del tuo viaggio. Ogni pizza racconta una storia, ogni quartiere ha i suoi tesori nascosti. Con Cravit puoi trasformare ogni scoperta in una missione personale.",
   otherZones = [
-    { name: "Roma Sud", slug: "/blog/migliori-pizze-roma-sud", highlight: "Marconi, Garbatella, Ostia" },
-    { name: "Roma Nord", slug: "/blog/migliori-pizze-roma-nord", highlight: "Tufello, Trieste, Prati" },
-    { name: "Roma Est", slug: "/blog/migliori-pizze-roma-est", highlight: "Centocella, Tuscolano" },
-    { name: "Roma Ovest", slug: "/blog/migliori-pizze-roma-ovest-centro", highlight: "Monteverde, Centro" },
+    { name: "Roma Sud", slug: "/blog/pizzerie-roma-sud", highlight: "Marconi, Garbatella, Ostia" },
+    { name: "Roma Nord", slug: "/blog/pizzerie-roma-nord", highlight: "Tufello, Trieste, Prati" },
+    { name: "Roma Est", slug: "/blog/pizzerie-roma-est", highlight: "Centocella, Tuscolano" },
+    { name: "Roma Ovest", slug: "/blog/pizzerie-roma-ovest-centro", highlight: "Monteverde, Centro" },
   ]
 }: ConclusionProps) {
   const containerVariants = {
@@ -69,7 +69,7 @@ export function Conclusion({
       </motion.div>
 
       {/* Summary */}
-      <motion.div 
+      <motion.div
         variants={itemVariants}
         className="mb-10 text-center"
       >
@@ -79,7 +79,7 @@ export function Conclusion({
       </motion.div>
 
       {/* CTA Section */}
-      <motion.div 
+      <motion.div
         variants={itemVariants}
         className="mb-12 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-[var(--color-dark-1)]/5 md:p-8"
       >
@@ -145,7 +145,7 @@ export function Conclusion({
       </motion.div>
 
       {/* Footer Quote */}
-      <motion.div 
+      <motion.div
         variants={itemVariants}
         className="mt-10 text-center"
       >

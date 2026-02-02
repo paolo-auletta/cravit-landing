@@ -134,7 +134,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   src={post.coverImage}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
                   priority
                 />
               </div>
