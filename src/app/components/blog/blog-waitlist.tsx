@@ -17,13 +17,13 @@ export function BlogWaitlist() {
       >
         <div className="mx-auto max-w-md text-center">
           <span className="mb-4 inline-flex items-center rounded-full border border-[var(--color-dark-1)]/8 bg-white/60 px-3 py-1 text-xs font-medium uppercase tracking-wide text-[var(--color-dark-1)]/60">
-            Early Access
+            Beta Testing
           </span>
           
-          <h3 className="heading-3 mb-3">Join the Waitlist</h3>
+          <h3 className="heading-3 mb-3">Join the Beta</h3>
           
           <p className="body-m mb-6 text-[var(--color-dark-1)]/60">
-            Be the first to know when Cravit launches on the App Store. No spam, just launch updates.
+            Download Cravit now on TestFlight and be among the first to experience the future of food discovery.
           </p>
 
           <Button
@@ -32,7 +32,7 @@ export function BlogWaitlist() {
             onClick={() => setIsModalOpen(true)}
           >
             <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            Join Waitlist
+            Join Beta
           </Button>
         </div>
       </section>

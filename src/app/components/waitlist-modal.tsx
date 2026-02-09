@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
-import { Waitlist } from "@clerk/nextjs";
+import { X, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type WaitlistModalProps = {
@@ -12,6 +11,11 @@ type WaitlistModalProps = {
 
 export function WaitlistModal({ open, onClose }: WaitlistModalProps) {
   if (!open) return null;
+
+  const handleTestFlightClick = () => {
+    window.open("https://testflight.apple.com/join/CMGqWVnv", "_blank");
+    onClose();
+  };
 
   return (
     <div
@@ -34,18 +38,18 @@ export function WaitlistModal({ open, onClose }: WaitlistModalProps) {
           <div className="flex items-start justify-between gap-6 border-b border-[#F2EFEB] px-6 pb-4 pt-5">
             <div className="flex flex-col gap-2">
               <span className="inline-flex mb-2 w-fit items-center rounded-full border border-[rgba(18,17,17,0.06)] bg-white/80 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-[rgba(18,17,17,0.55)]">
-                Cravy early access
+                Beta Testing
               </span>
               <h3 className="heading-3">
-                Join the Cravy waitlist
+                Join the Cravy Beta
               </h3>
               <p className="body-m">
-                Enter your email and we&apos;ll let you know as soon as Cravy is ready in your city.
+                Be among the first to experience Cravy. Download the beta now through TestFlight and help shape the future of food discovery.
               </p>
             </div>
             <Button
               variant="outline"
-              aria-label="Close waitlist"
+              aria-label="Close modal"
               className="size-8 rounded-full bg-white"
               onClick={onClose}
             >
@@ -54,7 +58,14 @@ export function WaitlistModal({ open, onClose }: WaitlistModalProps) {
           </div>
 
           <div className="bg-[linear-gradient(to_bottom,rgba(255,255,255,0.96),rgba(255,249,242,0.96))] px-4 pb-5 pt-4 sm:px-6 flex justify-center items-center">
-            <Waitlist />
+            <Button
+              variant="heroLarge"
+              className="group"
+              onClick={handleTestFlightClick}
+            >
+              <ArrowUpRight className="size-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              Open TestFlight
+            </Button>
           </div>
         </div>
       </motion.div>

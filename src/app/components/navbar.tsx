@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
+import { ArrowUpRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -13,8 +14,7 @@ const NAV_LINKS = [
   { label: "Feedback", href: "https://cravit.featurebase.app/" },
 ]
 
-const PRODUCT_HUNT_URL =
-  "https://www.producthunt.com/products/cravit?utm_source=badge-featured&utm_medium=badge"
+const TESTFLIGHT_URL = "https://testflight.apple.com/join/CMGqWVnv"
 
 export function Navbar() {
   const [activeLink, setActiveLink] = useState("Blog")
@@ -109,12 +109,13 @@ export function Navbar() {
 
             <div className="ml-5">
               <a
-                href={PRODUCT_HUNT_URL}
+                href={TESTFLIGHT_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center rounded-full bg-[var(--color-dark-3)] hover:bg-[var(--color-dark-1)] px-5 py-1.5 text-sm font-medium text-white shadow-[0_16px_32px_rgba(18,17,17,0.25)] transition-all hover:translate-y-[-1px] hover:bg-black/90"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-dark-3)] hover:bg-[var(--color-dark-1)] px-5 py-1.5 text-sm font-medium text-white shadow-[0_16px_32px_rgba(18,17,17,0.25)] transition-all hover:translate-y-[-1px] hover:bg-black/90 group"
               >
-                Product Hunt
+                Join the Beta
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
             </div>
           </div>
@@ -193,12 +194,13 @@ export function Navbar() {
 
                     <div className="mt-[22px] flex flex-col gap-[22px]">
                       <a
-                        href={PRODUCT_HUNT_URL}
+                        href={TESTFLIGHT_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex w-full items-center justify-center rounded-[18px] bg-[var(--color-dark-3)] px-4 py-3 text-xl font-medium text-white shadow-[0_16px_32px_rgba(18,17,17,0.25)] transition-all hover:translate-y-[-1px] hover:bg-black/90"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-[18px] bg-[var(--color-dark-3)] px-4 py-3 text-xl font-medium text-white shadow-[0_16px_32px_rgba(18,17,17,0.25)] transition-all hover:translate-y-[-1px] hover:bg-black/90 group"
                       >
-                        Product Hunt
+                        Join the Beta
+                        <ArrowUpRight className="h-5 w-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                       </a>
                     </div>
                   </div>

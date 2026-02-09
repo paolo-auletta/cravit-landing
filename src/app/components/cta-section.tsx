@@ -24,7 +24,7 @@ export function CtaSection() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
             <div className="flex flex-col gap-6">
               <span className="inline-flex w-fit items-center rounded-full border border-[rgba(18,17,17,0.08)] bg-white/80 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-[rgba(18,17,17,0.65)]">
-                Early access
+                Beta Testing
               </span>
 
               <h2 className="heading-2">
@@ -34,7 +34,7 @@ export function CtaSection() {
               </h2>
 
               <p className="body-l max-w-lg">
-                Join the waitlist to be among the first to turn your cravings into
+                Download the beta now and be among the first to turn your cravings into
                 shared food missions with friends.
               </p>
 
@@ -45,11 +45,11 @@ export function CtaSection() {
                   onClick={() => setIsWaitlistOpen(true)}
                 >
                   <ArrowUpRight className="size-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                  Join the Waitlist
+                  Join the Beta
                 </Button>
                 <span className="body-s">
                   <span className="text-[rgba(18,17,17,0.6)]">
-                    No spam, just launch updates and early access invites.
+                    Available now on TestFlight for iOS.
                   </span>
                 </span>
               </div>
