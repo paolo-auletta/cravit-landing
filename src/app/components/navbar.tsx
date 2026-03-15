@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 
@@ -11,13 +12,14 @@ import { cn } from "@/lib/utils"
 const NAV_LINKS = [
   { label: "Home", href: "/", showOnDesktop: false },
   { label: "Blog", href: "/blog" },
-  { label: "Feedback", href: "https://cravit.featurebase.app/" },
+  { label: "Support", href: "/support" },
+  { label: "Feedback", href: "https://cravit.featurebase.app/", external: true },
 ]
 
 const TESTFLIGHT_URL = "https://testflight.apple.com/join/CMGqWVnv"
 
 export function Navbar() {
-  const [activeLink, setActiveLink] = useState("Blog")
+  const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isNavHidden, setIsNavHidden] = useState(false)
   const lastScrollY = useRef(0)
@@ -53,12 +55,19 @@ export function Navbar() {
     }
   }, [isMenuOpen])
 
-  const desktopLinks = NAV_LINKS
+  const desktopLinks = NAV_LINKS.filter((link) => link.showOnDesktop !== false)
   const mobileLinks = NAV_LINKS
 
-  const handleNavSelect = (label: string) => {
-    setActiveLink(label)
+  const handleNavSelect = () => {
     setIsMenuOpen(false)
+  }
+
+  const isActiveLink = (href: string) => {
+    if (href === "/") {
+      return pathname === "/"
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`)
   }
 
   return (
@@ -90,20 +99,33 @@ export function Navbar() {
           <div className="flex items-center">
             <nav aria-label="Primary" className="flex items-center gap-5">
               {desktopLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={cn(
-                    "nav-link transition-colors duration-200",
-                    activeLink === link.label
-                      ? "text-[var(--color-dark-1)] opacity-100"
-                      : "text-[var(--color-dark-1)]/75 hover:opacity-90",
-                  )}
-                  aria-current={activeLink === link.label ? "page" : undefined}
-                  onClick={() => handleNavSelect(link.label)}
-                >
-                  {link.label}
-                </Link>
+                link.external ? (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="nav-link text-[var(--color-dark-1)]/75 transition-colors duration-200 hover:opacity-90"
+                    onClick={handleNavSelect}
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className={cn(
+                      "nav-link transition-colors duration-200",
+                      isActiveLink(link.href)
+                        ? "text-[var(--color-dark-1)] opacity-100"
+                        : "text-[var(--color-dark-1)]/75 hover:opacity-90",
+                    )}
+                    aria-current={isActiveLink(link.href) ? "page" : undefined}
+                    onClick={handleNavSelect}
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
             </nav>
 
@@ -112,17 +134,17 @@ export function Navbar() {
                 href={TESTFLIGHT_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-dark-3)] hover:bg-[var(--color-dark-1)] px-5 py-1.5 text-sm font-medium text-white shadow-[0_16px_32px_rgba(18,17,17,0.25)] transition-all hover:translate-y-[-1px] hover:bg-black/90 group"
+                className="group inline-flex items-center gap-1.5 rounded-full bg-[var(--color-dark-3)] px-5 py-1.5 text-sm font-medium text-white shadow-[0_16px_32px_rgba(18,17,17,0.25)] transition-[background-color,transform,box-shadow] duration-200 hover:translate-y-[-1px] hover:bg-black/90"
               >
                 Join the Beta
-                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
             </div>
           </div>
         </div>
 
         <div className="sm:hidden">
-          <div className="rounded-[22px] bg-[var(--color-sand)]/95 px-5 py-2.5 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] backdrop-blur-[10px] transition-all">
+          <div className="rounded-[22px] bg-[var(--color-sand)]/95 px-5 py-2.5 shadow-[0px_10px_30px_rgba(0,0,0,0.2)] backdrop-blur-[10px] transition-[box-shadow,background-color] duration-200">
             <div className="flex items-center justify-between">
               <Link href="/">
                 <Image
@@ -140,23 +162,23 @@ export function Navbar() {
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
                 onClick={() => setIsMenuOpen((prev) => !prev)}
-                className="relative h-10 w-10 rounded-full border border-transparent transition-all hover:border-[rgba(18,17,17,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-dark-1)]"
+                className="relative h-10 w-10 rounded-full border border-transparent transition-[border-color,box-shadow] duration-200 hover:border-[rgba(18,17,17,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-dark-1)]"
               >
                 <span
                   className={cn(
-                    "absolute left-1/2 top-[30%] h-0.5 w-6 -translate-x-1/2 rounded-full bg-[var(--color-dark-1)] transition-all duration-200",
+                    "absolute left-1/2 top-[30%] h-0.5 w-6 -translate-x-1/2 rounded-full bg-[var(--color-dark-1)] transition-[top,transform] duration-200",
                     isMenuOpen && "top-1/2 rotate-45",
                   )}
                 />
                 <span
                   className={cn(
-                    "absolute left-1/2 top-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-[var(--color-dark-1)] transition-all duration-200",
+                    "absolute left-1/2 top-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-[var(--color-dark-1)] transition-[transform,opacity] duration-200",
                     isMenuOpen && "scale-x-0 opacity-0",
                   )}
                 />
                 <span
                   className={cn(
-                    "absolute left-1/2 top-[70%] h-0.5 w-6 -translate-x-1/2 rounded-full bg-[var(--color-dark-1)] transition-all duration-200",
+                    "absolute left-1/2 top-[70%] h-0.5 w-6 -translate-x-1/2 rounded-full bg-[var(--color-dark-1)] transition-[top,transform] duration-200",
                     isMenuOpen && "top-1/2 -rotate-45",
                   )}
                 />
@@ -176,19 +198,33 @@ export function Navbar() {
                   <div className="flex flex-col px-1 py-[22px]">
                     <nav aria-label="Mobile primary" className="flex flex-col gap-3">
                       {mobileLinks.map((link) => (
-                        <Link
-                          key={link.label}
-                          href={link.href}
-                          className={cn(
-                            "heading-3 text-left leading-tight transition-colors duration-200",
-                            activeLink === link.label
-                              ? "text-[var(--color-dark-1)]"
-                              : "text-[color-mix(in_srgb,var(--color-dark-1)_75%,transparent)] hover:text-[var(--color-dark-1)]",
-                          )}
-                          onClick={() => handleNavSelect(link.label)}
-                        >
-                          {link.label}
-                        </Link>
+                        link.external ? (
+                          <a
+                            key={link.label}
+                            href={link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="heading-3 text-left leading-tight text-[color-mix(in_srgb,var(--color-dark-1)_75%,transparent)] transition-colors duration-200 hover:text-[var(--color-dark-1)]"
+                            onClick={handleNavSelect}
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <Link
+                            key={link.label}
+                            href={link.href}
+                            className={cn(
+                              "heading-3 text-left leading-tight transition-colors duration-200",
+                              isActiveLink(link.href)
+                                ? "text-[var(--color-dark-1)]"
+                                : "text-[color-mix(in_srgb,var(--color-dark-1)_75%,transparent)] hover:text-[var(--color-dark-1)]",
+                            )}
+                            aria-current={isActiveLink(link.href) ? "page" : undefined}
+                            onClick={handleNavSelect}
+                          >
+                            {link.label}
+                          </Link>
+                        )
                       ))}
                     </nav>
 
@@ -197,10 +233,10 @@ export function Navbar() {
                         href={TESTFLIGHT_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-[18px] bg-[var(--color-dark-3)] px-4 py-3 text-xl font-medium text-white shadow-[0_16px_32px_rgba(18,17,17,0.25)] transition-all hover:translate-y-[-1px] hover:bg-black/90 group"
+                        className="group inline-flex w-full items-center justify-center gap-2 rounded-[18px] bg-[var(--color-dark-3)] px-4 py-3 text-xl font-medium text-white shadow-[0_16px_32px_rgba(18,17,17,0.25)] transition-[background-color,transform,box-shadow] duration-200 hover:translate-y-[-1px] hover:bg-black/90"
                       >
                         Join the Beta
-                        <ArrowUpRight className="h-5 w-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        <ArrowUpRight aria-hidden="true" className="h-5 w-5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                       </a>
                     </div>
                   </div>

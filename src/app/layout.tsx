@@ -4,15 +4,19 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next"
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.length > 0
+    ? process.env.NEXT_PUBLIC_SITE_URL
+    : "https://getcravit.com"
+
+const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
   variable: "--font-poppins",
 });
 
-const appBaseUrl =
-  process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.length > 0
-    ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
-    : undefined;
+const appBaseUrl = new URL(siteUrl)
 
 export const metadata: Metadata = {
   metadataBase: appBaseUrl,
@@ -108,14 +112,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const app = (
+    <>
+      {children}
+      <Analytics />
+    </>
+  )
+
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${poppins.variable} antialiased`}>
-          {children}
-          <Analytics />
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={`${poppins.variable} antialiased`}>
+        {clerkPublishableKey ? (
+          <ClerkProvider publishableKey={clerkPublishableKey}>{app}</ClerkProvider>
+        ) : (
+          app
+        )}
+      </body>
+    </html>
   );
 }

@@ -1,6 +1,13 @@
 import { clerkMiddleware } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-export default clerkMiddleware();
+const proxy = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  ? clerkMiddleware()
+  : function proxy() {
+      return NextResponse.next();
+    };
+
+export default proxy;
 
 export const config = {
   matcher: [

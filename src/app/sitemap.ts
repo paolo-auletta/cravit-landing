@@ -4,7 +4,7 @@ import { getAllPosts } from "@/lib/posts";
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.length > 0
     ? process.env.NEXT_PUBLIC_SITE_URL
-    : "http://localhost:3000";
+    : "https://getcravit.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -32,6 +32,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/privacy`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteUrl}/support`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.6,
     },
     // Individual blog posts
     ...blogEntries,
