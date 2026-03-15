@@ -133,9 +133,10 @@ function SortableHeader({
   )
 }
 
-export function PizzeriaTable({ data }: { data: PizzeriaData[] }) {
+export function PizzeriaTable({ data }: { data?: PizzeriaData[] | null }) {
   const [sortKey, setSortKey] = useState<"votoFinale" | "quartiere" | null>("votoFinale")
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc")
+  const safeData = Array.isArray(data) ? data : []
 
   const handleSort = (key: "votoFinale" | "quartiere") => {
     if (sortKey === key) {
@@ -146,7 +147,7 @@ export function PizzeriaTable({ data }: { data: PizzeriaData[] }) {
     }
   }
 
-  const sortedData = sortData(data, sortKey, sortDirection)
+  const sortedData = sortData(safeData, sortKey, sortDirection)
 
   return (
     <div className="my-10 overflow-hidden rounded-3xl bg-white shadow-[0_4px_24px_rgba(0,0,0,0.06)] ring-1 ring-[var(--color-dark-1)]/5">

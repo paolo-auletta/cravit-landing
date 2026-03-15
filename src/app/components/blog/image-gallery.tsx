@@ -8,12 +8,12 @@ interface GalleryImage {
 }
 
 interface ImageGalleryProps {
-  images: GalleryImage[]
+  images?: GalleryImage[] | null
   layout?: "grid" | "masonry" | "featured"
 }
 
 export function ImageGallery({ images, layout = "featured" }: ImageGalleryProps) {
-  if (images.length === 0) return null
+  if (!Array.isArray(images) || images.length === 0) return null
 
   // Featured layout: first image large, rest in a grid below
   if (layout === "featured" && images.length >= 3) {

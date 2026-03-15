@@ -15,6 +15,10 @@ function isUrl(str: string) {
 }
 
 export function PizzeriaInfoCard({ nome, voto, indirizzo, mapsUrl, recensione }: PizzeriaInfoCardProps) {
+  if (!nome || !voto || !indirizzo) {
+    return null
+  }
+
   const googleMapsUrl =
     mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(indirizzo)}`
 

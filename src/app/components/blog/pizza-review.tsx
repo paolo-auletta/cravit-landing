@@ -282,10 +282,14 @@ export function PizzaReview({
   suppli, 
   extra 
 }: { 
-  pizza: PizzaGrades; 
+  pizza?: PizzaGrades | null; 
   suppli?: SuppliGrades | null; 
   extra?: ExtraGrades 
 }) {
+  if (!pizza) {
+    return null
+  }
+
   // Calculate averages
   const pizzaAvg = (pizza.croccantezza + pizza.cottura + pizza.impasto + pizza.condimenti) / 4
   
